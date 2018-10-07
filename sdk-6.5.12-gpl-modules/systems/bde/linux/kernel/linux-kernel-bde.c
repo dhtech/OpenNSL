@@ -1973,14 +1973,16 @@ _msi_connect(bde_ctrl_t *ctrl)
         for (i = 0; i < ctrl->msix_cnt; i++)
                 ctrl->entries[i].entry = i;
 
-        ret = pci_enable_msix(ctrl->pci_device,
-                                           ctrl->entries, ctrl->msix_cnt);
+        ret = pci_enable_msix_range(ctrl->pci_device,
+                                    ctrl->entries,
+                                    ctrl->msix_cnt, ctrl->msix_cnt);
         if (ret > 0) {
             /* Not enough vectors available , Retry MSI-X */
             gprintk("Retrying with MSI-X interrupts = %d\n", ret);
             ctrl->msix_cnt = ret;
-            ret = pci_enable_msix(ctrl->pci_device,
-                                           ctrl->entries, ctrl->msix_cnt);
+            ret = pci_enable_msix_range(ctrl->pci_device,
+                                        ctrl->entries,
+                                        ctrl->msix_cnt, ctrl->msix_cnt);
             if (ret != 0)
                 goto er_intx_free;
         } else if (ret < 0) {

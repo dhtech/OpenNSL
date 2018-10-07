@@ -61,12 +61,12 @@
 #include <linux/pci.h>
 #include <linux/interrupt.h>
 #include <linux/stat.h>
-#include <linux/sched.h>
+#include <linux/sched/signal.h>
 #include <linux/delay.h>
+#include <linux/uaccess.h>
 
 #include <asm/io.h>
 #include <asm/hardirq.h>
-#include <asm/uaccess.h>
 
 #ifdef CONFIG_DEVFS_FS
 #include <linux/devfs_fs_kernel.h>
